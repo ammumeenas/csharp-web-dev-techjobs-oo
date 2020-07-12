@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+
 namespace TechJobsOO
 {
     public class Job
@@ -14,6 +16,47 @@ namespace TechJobsOO
 
         // TODO: Add the two necessary constructors.
 
+        public Job()
+        {
+            Id = nextId++;
+        }
+
+        public Job(string name, Employer employerName,Location employerLocation,PositionType jobType, CoreCompetency jobCoreCompetency) : this()
+        {
+            Name = name;
+            EmployerName = employerName;
+            EmployerLocation = employerLocation;
+            JobType = jobType;
+            JobCoreCompetency = jobCoreCompetency;
+
+
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Job job &&
+                   Id == job.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
+
+        public  override string ToString()
+        {
+
+
+            string nodata = "No data found";
+            string namenull = Name == "" ? nodata : Name;
+            string employernull = EmployerName.Value == "" ? nodata : EmployerName.Value;
+            string positionnull = JobType.Value == "" ? nodata : JobType.Value;
+            string locationnull = EmployerLocation.Value == "" ? nodata : EmployerLocation.Value;
+            string corenull = JobCoreCompetency.Value == "" ? nodata : JobCoreCompetency.Value;
+            string output = "\n"+"ID:" + Id + "\n"+"Name:" + namenull +  "\n"  + "Employer:" + employernull + "\n"  + "Location:" + locationnull + "\n" +  "Position Type:" + positionnull + "\n" + "Core Competency:" + corenull+ "\n";
+            
+            return output;
+        }
         // TODO: Generate Equals() and GetHashCode() methods.
     }
 }
