@@ -94,7 +94,16 @@ namespace TechJobsTests
             Assert.AreEqual(expectedoutput, actualoutput);
         }
 
+        [TestMethod]
+        public void testtostringmethod4()
+        {
 
+            Job obj = new Job("", new Employer(""), new Location(""), new PositionType(""), new CoreCompetency(""));
+            int id = obj.Id;
+            string expectedoutput = "OOPS! This job does not seem to exist.";
+            string actualoutput = obj.ToString();
+            Assert.AreEqual(expectedoutput, actualoutput);
+        }
 
 
 
