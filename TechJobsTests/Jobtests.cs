@@ -1,31 +1,57 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using TechJobsOO;
+namespace TechJobsTests { 
 
-namespace TechJobsTests
-{
+
     [TestClass]
     public class Jobtests
     {
-        [TestMethod]
+
+ 
+
+    Job job1;
+    Job job2;
+    Employer employer;
+    Location location;
+    PositionType positiontype;
+    CoreCompetency corecompetency;
+    Job obj;
+    Job obj1;
+    Job obj2;
+    Job nodataobj;
+    Job emptyobj;
+    [TestInitialize]
+    public void Classinstance()
+    {
+        job1 = new TechJobsOO.Job();
+        job2 = new TechJobsOO.Job();
+
+        employer = new Employer("ACME");
+        location = new Location("Desert");
+        positiontype = new PositionType("Persistence");
+        corecompetency = new CoreCompetency("Quality control");
+        obj = new TechJobsOO.Job("Product tester", employer, location, positiontype, corecompetency);
+
+        obj1 = new TechJobsOO.Job("chris", new Employer("john"), new Location("Desert"), new PositionType("testing"), new CoreCompetency("Quality control"));
+        obj2 = new TechJobsOO.Job("chris", new Employer("john"), new Location("Desert"), new PositionType("testing"), new CoreCompetency("Quality control"));
+
+        nodataobj = new Job("chris", new Employer("john"), new Location(""), new PositionType("testing"), new CoreCompetency("Quality control"));
+         emptyobj = new Job("", new Employer(""), new Location(""), new PositionType(""), new CoreCompetency(""));
+    }
+
+    [TestMethod]
         public void TestSettingJobId()
         {
-            TechJobsOO.Job id1 = new TechJobsOO.Job();
-            TechJobsOO.Job id2 = new TechJobsOO.Job();
-            bool actualoutput = id1.Equals(id2);
-            bool expectedoutput = false;
-            Assert.AreEqual(expectedoutput,actualoutput);
+            
+            bool actualoutput = job1.Id.Equals(job2.Id);
+            Assert.IsFalse(actualoutput);
 
         }
-        [TestMethod]
 
+        [TestMethod]
         public void TestJobConstructorSetsAllFields()
-        {
-            Employer employer = new Employer("ACME");
-            Location location = new Location("Desert");
-            PositionType positiontype = new PositionType("Persistence");
-            CoreCompetency corecompetency = new CoreCompetency("Quality control");
-            TechJobsOO.Job obj = new TechJobsOO.Job("Product tester", employer, location, positiontype,corecompetency);
+    {
             
             Assert.AreEqual("Product tester", obj.Name);
             Assert.AreEqual(employer, obj.EmployerName);
@@ -35,18 +61,14 @@ namespace TechJobsTests
         }
 
         [TestMethod]
-
         public void TestJobsForEquality()
         {
-            TechJobsOO.Job obj1 = new TechJobsOO.Job("chris", new Employer("john"), new Location("Desert"), new PositionType("testing"), new CoreCompetency("Quality control"));
-            TechJobsOO.Job obj2 = new TechJobsOO.Job("chris", new Employer("john"), new Location("Desert"), new PositionType("testing"), new CoreCompetency("Quality control"));
             bool expectedoutput = obj1.Equals(obj2);
             bool actualoutput = false;
             Assert.AreEqual(expectedoutput, actualoutput);
         }
 
         [TestMethod]
-
         public void testtostringmethodstartswith()
         {
             Job obj = new Job("chris", new Employer("john"), new Location("Desert"), new PositionType("testing"), new CoreCompetency("Quality control"));
@@ -56,8 +78,8 @@ namespace TechJobsTests
         [TestMethod]
         public void testtostringmethodendswith()
         {
-            Job obj = new Job("chris", new Employer("john"), new Location("Desert"), new PositionType("testing"), new CoreCompetency("Quality control"));
-            bool endswith = obj.ToString().EndsWith("\n");
+          
+            bool endswith = obj1.ToString().EndsWith("\n");
             Assert.IsTrue(endswith);
         }
 
@@ -65,8 +87,8 @@ namespace TechJobsTests
 
         public void testtostringmethod2()
         {
-            Job obj = new Job("chris", new Employer("john"), new Location("Desert"), new PositionType("testing"), new CoreCompetency("Quality control"));
-            int id = obj.Id;
+           
+            int id = obj1.Id;
             string expectedoutput = "\n" +
                                  "ID:"+ id +"\n"+
                                  "Name:chris" + "\n"+
@@ -74,15 +96,14 @@ namespace TechJobsTests
                                   "Location:Desert" + "\n" +
                                  "Position Type:testing" + "\n" +
                                  "Core Competency:Quality control" + "\n";
-            string actualoutput = obj.ToString();
+            string actualoutput = obj1.ToString();
             Assert.AreEqual(expectedoutput, actualoutput);
         }
         [TestMethod]
         public void testtostringmethod3()
         {
 
-            Job obj = new Job("chris", new Employer("john"), new Location(""), new PositionType("testing"), new CoreCompetency("Quality control"));
-            int id = obj.Id;
+            int id = nodataobj.Id;
             string expectedoutput = "\n" +
                                  "ID:" + id + "\n" +
                                  "Name:chris" + "\n" +
@@ -90,18 +111,16 @@ namespace TechJobsTests
                                   "Location:No data found" + "\n" +
                                  "Position Type:testing" + "\n" +
                                  "Core Competency:Quality control" + "\n";
-            string actualoutput = obj.ToString();
+            string actualoutput = nodataobj.ToString();
             Assert.AreEqual(expectedoutput, actualoutput);
         }
 
         [TestMethod]
         public void testtostringmethod4()
         {
-
-            Job obj = new Job("", new Employer(""), new Location(""), new PositionType(""), new CoreCompetency(""));
-            int id = obj.Id;
+            int id = emptyobj.Id;
             string expectedoutput = "OOPS! This job does not seem to exist.";
-            string actualoutput = obj.ToString();
+            string actualoutput = emptyobj.ToString();
             Assert.AreEqual(expectedoutput, actualoutput);
         }
 
